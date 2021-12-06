@@ -1,0 +1,15 @@
+#contenedor
+{
+    position: absolute;
+    background-color: #c0c0c0;
+}
+
+#cuadrado1
+{
+    background-color: #00ff00;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 100px;
+    top: 100px;
+}
