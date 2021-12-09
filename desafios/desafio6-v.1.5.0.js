@@ -30,11 +30,22 @@ let burgers = [
 
 // Función que recibe un array de IDs y retorna un nuevo Array con los ID recibidos
 
-let getByID = ( arrayIDs) => {
-    return burgers.filter((burger) => {
-        if(arrayIDs.indexOf(burger.id) != -1) return true
-        return false
+// let getByID = ( arrayIDs) => {
+//     return burgers.filter((burger) => {
+//         if(arrayIDs.indexOf(burger.id) != -1) return true
+//         return false
+//     })
+// }
+// console.log(getByID([2, 4]));
+
+
+// Ordenando las hamburguesas según su precio del tamaño grande 
+
+let orderBurger = () => {
+    burgers.sort((pa, pb) => {
+        if (pa.prices.big < pb.prices.big) return -1
+        return 1
     })
 }
-
-console.log(getByID([2, 4]));
+orderBurger();
+console.log(burgers);
