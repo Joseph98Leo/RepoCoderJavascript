@@ -6,13 +6,19 @@ let anchoCanvas = 400;
 let altoCanvas = 640;
 
 let anchoTablero = 10;
-let altoTablero = 16;
+let altoTablero = 20;
+
+let margenSuperior = 4;
 
 let anchoF = 40;
 let altoF = 40;
 
 // (12 x 17) - ( 10 x 16 )
 let tablero = [
+[1,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,0,0,0,0,0,0,0,1],
@@ -258,11 +264,29 @@ const fichaGrafico = [
 let pieza;
 
 let objPieza = function(){
-    this.x = 1;
-    this.y = 1;
+    this.x = 0;
+    this.y = 0;
 
     this.angulo = 0;
-    this.tipo = 1;
+    this.tipo = 0;
+
+    this.retraso = 50;
+    this.fotograma = 0;
+
+    this.nueva = function(){
+        this.tipo = Math.floor(Math.random() * 7);
+        this.y = 5;
+        this.x = 4;
+    };
+
+    this.caer = function(){
+        if(this.fotograma < this.retraso){
+            this.fotograma++;
+        }else{
+            this.y++;
+            this.fotograma = 0;
+        }
+    }
 
     this.dibuja = function(){
         for(py=0;py<4;py++){
@@ -299,68 +323,78 @@ let objPieza = function(){
                     ctx.fillStyle = morado;
                 }
 
-                ctx.fillRect((this.x + px) * anchoF, (this.y + py) * altoF, anchoF, altoF)
+                ctx.fillRect((this.x + px -1) * anchoF, (this.y + py - margenSuperior) * altoF, anchoF, altoF)
                 }
             }
         }
     };
 
-    this.rotar = function() {
-        console.log('Rotar');
+    this.rotar = function(){
+        if(this.angulo < 3){
+            this.angulo++;
+        }else{
+            this.angulo = 0;
+        }
+        console.log('Rotar')
     };
 
     this.abajo = function() {
+        this.y++;
         console.log('abajo')
     };
 
     this.derecha = function() {
+        this.x++;
         console.log('derecha')
     };
 
     this.izquierda = function() {
+        this.x--;
         console.log('izquierda')
     };
+
+    this.nueva();
 
 };
 
 
 
 function dibujaTablero(){
-    for(py=0;py<altoTablero;py++){
-        for(px=0;px<anchoTablero;px++){
+    for(py=margenSuperior;py<altoTablero;py++){
+        for(px=1;px<anchoTablero;px++){
 
-            if(fichaGrafico[this.tipo][this.angulo][py][px]!=0){
+            if(tablero[py][px]!=0){
 
 
-            if(fichaGrafico[this.tipo][this.angulo][py][px] == 1){
+            if(tablero[py][px] == 1){
                 ctx.fillStyle = rojo;
             }
 
-            if(fichaGrafico[this.tipo][this.angulo][py][px] == 2){
+            if(tablero[py][px] == 2){
                 ctx.fillStyle = naranja;
             }
 
-            if(fichaGrafico[this.tipo][this.angulo][py][px] == 3){
+            if(tablero[py][px] == 3){
                 ctx.fillStyle = amarillo;
             }
             
-            if(fichaGrafico[this.tipo][this.angulo][py][px] == 4){
+            if(tablero[py][px] == 4){
                 ctx.fillStyle = verde;
             }
 
-            if(fichaGrafico[this.tipo][this.angulo][py][px] == 5){
+            if(tablero[py][px] == 5){
                 ctx.fillStyle = cyan;
             }
 
-            if(fichaGrafico[this.tipo][this.angulo][py][px] == 6){
+            if(tablero[py][px] == 6){
                 ctx.fillStyle = azul;
             }
 
-            if(fichaGrafico[this.tipo][this.angulo][py][px] == 7){
+            if(tablero[py][px] == 7){
                 ctx.fillStyle = morado;
             }
 
-            ctx.fillRect((this.x + px) * anchoF, (this.y + py) * altoF, anchoF, altoF)
+            ctx.fillRect((px-1)*anchoF, (py-margenSuperior) * altoF, anchoF, altoF)
             }
         }
     }
@@ -409,5 +443,7 @@ function borraCanvas(){
 
 function principal() {
     borraCanvas();
+    dibujaTablero();
+    pieza.caer();
     pieza.dibuja();
 }
