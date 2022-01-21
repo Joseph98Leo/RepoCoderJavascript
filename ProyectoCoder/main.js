@@ -13,6 +13,7 @@ let margenSuperior = 4;
 let anchoF = 40;
 let altoF = 40;
 
+// (12 x 17) - ( 10 x 16 )
 let tablero = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -60,7 +61,7 @@ let tableroCopia = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
-
+ 
 // COLORES
 
 let rojo = '#ff0000';
