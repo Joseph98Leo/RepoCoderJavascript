@@ -13,7 +13,6 @@ let margenSuperior = 4;
 let anchoF = 40;
 let altoF = 40;
 
-// (12 x 17) - ( 10 x 16 )
 let tablero = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -287,7 +286,6 @@ const fichaGrafico = [
 
 
 function reseteaTablero(){
-    console.log('resetea');
 
     for( py = 0; py < 21; py++){
         for( px = 0; px < 12; px++){
@@ -329,7 +327,26 @@ let objPieza = function () {
     };
 
 
+    this.limpia = function(){
+        let filaCompleta = true;
 
+        for( py = margenSuperior; py < altoTablero; py++ ){
+            filaCompleta = true;
+
+            for( px = 1; px < anchoTablero; px++ ){
+                if( tablero[py][px] == 0 ){
+                    filaCompleta = false;
+                }
+            }
+
+            if( filaCompleta == true ){
+                for( px = 1; px < anchoTablero + 1 ; px++ ){
+                    tablero[py][px] = 0;
+                }
+            }
+        }
+
+    }
 
 
 
@@ -342,6 +359,7 @@ let objPieza = function () {
                 this.y++;
             } else {
                 this.fijar();
+                this.limpia();
                 this.nueva();
 
                 if(this.compruebaSiPierde() == true){
@@ -439,14 +457,12 @@ let objPieza = function () {
             this.angulo = anguloNuevo;
         }
 
-        console.log('Rotar')
     };
 
     this.abajo = function () {
         
         if( this.colision( this.angulo, this.y + 1, this.x ) == false){
             this.y++;
-            console.log('abajo')
         }
 
     };
@@ -456,7 +472,6 @@ let objPieza = function () {
         if( this.colision( this.angulo, this.y, this.x+1 ) == false){
 
             this.x++;
-            console.log('derecha')
         }
 
     };
@@ -466,7 +481,6 @@ let objPieza = function () {
 
         if( this.colision( this.angulo, this.y, this.x-1 ) == false){
             this.x--;
-            console.log('izquierda')
         }
     };
 
